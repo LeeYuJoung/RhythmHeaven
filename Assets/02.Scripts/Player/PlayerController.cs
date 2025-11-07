@@ -1,10 +1,13 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using Utils.EnumTypes;
 
 public class PlayerController : MonoBehaviour
 {
     public PlayerState playerState = PlayerState.Idle;
+
     public Animator playerAnimation;
+    public AnimatorController[] animatorControllers;
 
     private int mistakeCount = 0;
     private const int maxMistakeCount = 2;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimation.SetTrigger("Greet");
                 CustomerManager.Instance.currentCustomer.currentTime = 0.0f;
                 CustomerManager.Instance.currentCustomer.customerState = CustomerState.Calculate;
+                CustomerManager.Instance.currentCustomer.productSpawnTime = CustomerManager.Instance.currentCustomer.spawnTimes.Dequeue();
             }
             else
             {
@@ -66,7 +70,6 @@ public class PlayerController : MonoBehaviour
                 ProductController _product = collision.gameObject.GetComponent<ProductController>();
                 if (_product != null && _product.productType == ProductType.Basic)
                 {
-                    Debug.Log("::: 계산 성공 :::");
                     _product.isActive = true;
                     Destroy(collision.gameObject);
                 }
@@ -81,7 +84,6 @@ public class PlayerController : MonoBehaviour
                 ProductController _product = collision.gameObject.GetComponent<ProductController>();
                 if (_product != null && _product.productType == ProductType.Strange)
                 {
-                    Debug.Log("::: 계산 성공 :::");
                     _product.isActive = true;
                     Destroy(collision.gameObject);
                 }

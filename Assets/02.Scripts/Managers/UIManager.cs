@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class UIManager : MonoBehaviour
 
     private Canvas canvas;
     private GameObject gameOverPhanel;
+    public Image blinkPhanel;
+    public GameObject guideBook;
 
     private void Awake()
     {
@@ -31,7 +34,9 @@ public class UIManager : MonoBehaviour
     private void Init()
     {
         canvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
-        gameOverPhanel = canvas.transform.GetChild(1).gameObject;
+        blinkPhanel = canvas.transform.GetChild(1).GetComponent<Image>();
+        guideBook = canvas.transform.GetChild(2).gameObject;
+        gameOverPhanel = canvas.transform.GetChild(3).gameObject;
     }
 
     public void GameOver()

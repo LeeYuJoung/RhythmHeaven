@@ -5,7 +5,7 @@ public class ProductController : MonoBehaviour
 {
     public ProductType productType;
 
-    public float moveSpeed = 3.0f;
+    private float moveSpeed = 4.0f;
     public bool isActive = false;
 
     private void Update()

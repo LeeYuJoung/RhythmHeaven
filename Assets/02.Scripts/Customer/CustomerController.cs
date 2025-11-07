@@ -16,9 +16,8 @@ public class CustomerController : MonoBehaviour
     public float currentTime = 0.0f;
     public float greetWaitTime = 10.0f;       // 牢荤 扁促府绰 矫埃
 
-    private float productSpawnTime;           // 力前 积己 矫埃
-    private float minProductSpawnTime = 0.0f; // 力前 积己 弥家 矫埃
-    private float maxProductSpawnTime = 2.0f; // 力前 积己 弥措 矫埃
+    public Queue<float> spawnTimes = new Queue<float>();
+    public float productSpawnTime;           // 力前 积己 矫埃
 
     private bool isSuccess = false;
 
@@ -85,8 +84,13 @@ public class CustomerController : MonoBehaviour
         else
         {
             currentTime = 0.0f;
-            productSpawnTime = Random.Range(minProductSpawnTime, maxProductSpawnTime);
-            Instantiate(products.Dequeue(), productSpawnPos.position, Quaternion.identity);
+            productSpawnTime = spawnTimes.Dequeue();
+            ProductController _product = Instantiate(products.Dequeue(), productSpawnPos.position, Quaternion.identity).GetComponent<ProductController>();
+
+            if (_product.productType == ProductType.Basic)
+                AudioManager.Instance.SFXPlay(SFXType.Beat, false);
+            else
+                AudioManager.Instance.SFXPlay(SFXType.StrageBeat, false);
         }
     }
 

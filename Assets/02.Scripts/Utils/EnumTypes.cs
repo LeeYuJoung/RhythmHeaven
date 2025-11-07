@@ -44,6 +44,7 @@ namespace Utils.EnumTypes
     public enum SFXType
     {
         Beat,        // 매트로놈 효과음
-        Scanner,     // 계산 효과음
+        StrageBeat,  // 이상현상 효과음
+        Scanner      // 계산 효과음
     }
 }

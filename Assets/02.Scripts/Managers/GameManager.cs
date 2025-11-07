@@ -5,9 +5,11 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance {  get { return instance; } }
 
+    private PlayerController playerController;
+
     public bool IsGameOver { get { return isGameOver; } }
 
-    private int warningCount = 0;    // 현재 경고 누적 횟수
+    public int warningCount = 0;    // 현재 경고 누적 횟수
 
     private float currentWorkingDay = 0.0f;   // 현재 근무 일자
     private float totalWorkingDay = 30.0f;    // 총 근무 일자
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 65;
         Screen.SetResolution(854, 480, true);
+
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     // 경고 발생
@@ -49,6 +53,8 @@ public class GameManager : MonoBehaviour
 
         if (warningCount >= 3)
             OnGameOver();
+        else
+            playerController.playerAnimation.runtimeAnimatorController = playerController.animatorControllers[GameManager.Instance.warningCount];
     }
 
     public void OnGameOver()

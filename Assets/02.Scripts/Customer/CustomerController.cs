@@ -29,6 +29,9 @@ public class CustomerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver)
+            return;
+
         OnProductStock();
         CheckCustomerState();
     }
@@ -42,8 +45,6 @@ public class CustomerController : MonoBehaviour
     {
         switch (customerState)
         {
-            case CustomerState.Idle:
-                break;
             case CustomerState.Greet:
                 OnGreetWait();
                 break;

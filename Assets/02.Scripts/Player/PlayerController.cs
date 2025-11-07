@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
             if(CustomerManager.Instance.currentCustomer.customerState == CustomerState.Greet)

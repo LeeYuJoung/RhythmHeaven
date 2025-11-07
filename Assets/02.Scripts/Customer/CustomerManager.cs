@@ -12,11 +12,8 @@ public class CustomerManager : MonoBehaviour
 
     private Transform customerSpawnPosition;
 
-    private int currentStage = 1;          // 현재 스테이지
-    private int customerCount = 2;         // 현재 등장할 손님 수
-    private int currentCustomerCount = 0;  // 현재까지 등장한 손님 수
-
-    private bool isAppeared = false;
+    private float currentTime = 0.0f;
+    private float customerSpawnTime = 2.0f;
 
     private void Awake()
     {
@@ -35,7 +32,18 @@ public class CustomerManager : MonoBehaviour
 
     private void Update()
     {
-
+        if(currentCustomer == null && !GameManager.Instance.IsGameOver)
+        {
+            if(currentTime < customerSpawnTime)
+            {
+                currentTime += Time.deltaTime;
+            }
+            else
+            {
+                currentTime = 0.0f;
+                OnAppeared();
+            }
+        }
     }
 
     // 손님 생성

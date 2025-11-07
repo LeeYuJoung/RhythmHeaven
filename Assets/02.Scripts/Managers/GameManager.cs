@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance {  get { return instance; } }
 
+    public bool IsGameOver { get { return isGameOver; } }
+
     private int warningCount = 0;    // 현재 경고 누적 횟수
 
     private float currentWorkingDay = 0.0f;   // 현재 근무 일자
@@ -23,7 +25,6 @@ public class GameManager : MonoBehaviour
 
         Init();
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     public void OnGameOver()
     {
         isGameOver = true;
+        UIManager.Instance.GameOver();
     }
 
     public void OnExit()

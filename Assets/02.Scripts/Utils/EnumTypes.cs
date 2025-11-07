@@ -28,4 +28,22 @@ namespace Utils.EnumTypes
         Basic,
         Strange
     }
+
+    // BGM 타입
+    public enum BGMType
+    {
+        Title, 
+        Intro,
+        Stage_1,
+        Stage_2,
+        Stage_3,
+        Ending
+    }
+
+    // SFX 타입
+    public enum SFXType
+    {
+        Beat,        // 매트로놈 효과음
+        Scanner,     // 계산 효과음
+    }
 }

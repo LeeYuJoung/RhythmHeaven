@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource bgmAudioSource;
     public AudioSource sfxAudioSource;
+    public AudioSource beatAudioSource;
+
     public AudioClip[] bgms;
     public AudioClip[] sfxs;
 
@@ -36,6 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         bgmAudioSource = GetComponent<AudioSource>();
         sfxAudioSource = GameObject.Find("SFXAudioPlayer").GetComponent<AudioSource>();
+        beatAudioSource = GameObject.Find("BeatAudioPlayer").GetComponent<AudioSource>();
     }
 
     // 오디오 재생 완료 확인
@@ -59,13 +62,22 @@ public class AudioManager : MonoBehaviour
     {
         bgmAudioSource.clip = null;
         bgmAudioSource.clip = bgms[(int)_type];
-        bgmAudioSource.playOnAwake = true;
+        bgmAudioSource.Play();
     }
 
-    public void SFXPlay(SFXType _type)
+    public void SFXPlay(SFXType _type, bool _isSFX)
     {
-        sfxAudioSource.clip = null;
-        sfxAudioSource.clip = sfxs[(int)_type];
-        sfxAudioSource.playOnAwake = true;
+        if (_isSFX)
+        {
+            sfxAudioSource.clip = null;
+            sfxAudioSource.clip = sfxs[(int)_type];
+            sfxAudioSource.Play();
+        }
+        else
+        {
+            beatAudioSource.clip = null;
+            beatAudioSource.clip = sfxs[(int)_type];
+            beatAudioSource.Play();
+        }
     }
 }

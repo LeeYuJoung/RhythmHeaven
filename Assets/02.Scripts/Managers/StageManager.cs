@@ -1,13 +1,12 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
     public static StageManager Instance { get { return instance; } }
 
-    private int currentStage = 1;          // 현재 스테이지
-    private int customerCount = 2;         // 현재 등장할 손님 수
-    private int currentCustomerCount = 0;  // 현재까지 등장한 손님 수
+    private int currentStage = 1;    // 현재 스테이지
 
     private void Awake()
     {
@@ -26,6 +25,26 @@ public class StageManager : MonoBehaviour
             return;
 
         AudioManager.Instance.OnHadEnded();
+    }
+
+    // 스테이지별 이벤트 관리
+    public void OnStageEvent()
+    {
+        switch(currentStage)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    // 정전 이벤트
+    public void OnBlackoutEvent()
+    {
+
     }
 
     public void OnNextStage()

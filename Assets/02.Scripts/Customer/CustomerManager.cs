@@ -11,6 +11,7 @@ public class CustomerManager : MonoBehaviour
     public CustomerController currentCustomer;
 
     private Transform customerSpawnPosition;
+    private Transform productSpawnPos;
 
     private float currentTime = 0.0f;
     private float customerSpawnTime = 2.0f;
@@ -23,6 +24,7 @@ public class CustomerManager : MonoBehaviour
             Destroy(gameObject);
 
         customerSpawnPosition = GameObject.Find("CustomerSpawnPos").GetComponent<Transform>();
+        productSpawnPos = GameObject.Find("ProductSpawnPos").GetComponent<Transform>();
     }
 
     private void Start()
@@ -46,6 +48,11 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
+    void SpawnNote()
+    {
+        GameObject note = Instantiate(productPrefabs[Random.Range(0, productPrefabs.Length)], productSpawnPos.position, Quaternion.identity);    
+    }
+
     // 颊丛 积己
     private void OnAppeared()
     {
@@ -53,7 +60,8 @@ public class CustomerManager : MonoBehaviour
         currentCustomer = Instantiate(customerPrefabs[_rdmIndex], customerSpawnPosition.position, Quaternion.identity)?.GetComponent<CustomerController>();
         currentCustomer.customerState = CustomerState.Greet;
 
-        for(int i = 0; i < currentCustomer.productCount; i++)
+        // 力前 积己
+        for (int i = 0; i < currentCustomer.productCount; i++)
         {
             currentCustomer.products.Enqueue(productPrefabs[Random.Range(0, productPrefabs.Length)]);
         }

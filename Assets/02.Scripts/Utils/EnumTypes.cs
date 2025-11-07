@@ -3,7 +3,7 @@ namespace Utils.EnumTypes
     // 플레이어 상태
     public enum PlayerState
     {
-        Idle,
+        Idle
     }
 
     // 손님 타입

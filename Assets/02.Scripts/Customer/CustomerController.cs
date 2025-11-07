@@ -8,9 +8,10 @@ public class CustomerController : MonoBehaviour
     public CustomerType customerType;
     public CustomerState customerState = CustomerState.Idle;
 
-    private Transform productSpawnPos;
     public Queue<GameObject> products = new Queue<GameObject>();  // 계산할 제품 리스트
     public int productCount = 4;   // 계산할 제품 갯수
+
+    private Transform productSpawnPos;
 
     public float currentTime = 0.0f;
     public float greetWaitTime = 10.0f;       // 인사 기다리는 시간
@@ -23,7 +24,6 @@ public class CustomerController : MonoBehaviour
 
     private void Awake()
     {
-        productSpawnPos = GameObject.Find("ProductSpawnPos").GetComponent<Transform>();
         Init();
     }
 
@@ -39,6 +39,7 @@ public class CustomerController : MonoBehaviour
     public void Init()
     {
         productSpawnTime = 0.0f;
+        productSpawnPos = GameObject.Find("ProductSpawnPos").GetComponent<Transform>();
     }
 
     public void CheckCustomerState()

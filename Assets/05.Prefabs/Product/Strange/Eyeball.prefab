@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8352302491445472474}
   - component: {fileID: 4182781125549927070}
   m_Layer: 0
-  m_Name: Product
+  m_Name: Eyeball
   m_TagString: Product
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f43a09c0b21dab34c98b538541aabb83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -155,7 +155,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.95, y: 1.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc214a83d9629b4ba2e72398fa8e437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productType: 0
-  appearedStage: 1
+  productType: 1
   moveSpeed: 3
   isActive: 0

@@ -4,7 +4,6 @@ using Utils.EnumTypes;
 public class ProductController : MonoBehaviour
 {
     public ProductType productType;
-    public int appearedStage;
 
     public float moveSpeed = 3.0f;
     public bool isActive = false;

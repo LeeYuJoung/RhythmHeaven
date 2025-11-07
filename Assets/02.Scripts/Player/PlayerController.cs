@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
     public PlayerState playerState = PlayerState.Idle;
     public Animator playerAnimation;
 
+    private int mistakeCount = 0;
+    private const int maxMistakeCount = 2;
+
     private void Awake()
     {
         playerAnimation = GetComponent<Animator>();
@@ -26,12 +29,29 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                playerAnimation.SetTrigger("Scanner");
+                OnScanner();
             }
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerAnimation.SetTrigger("Scanner");
+            OnScanner();
+        }
+    }
+
+    public void OnScanner()
+    {
+        AudioManager.Instance.SFXPlay(SFXType.Scanner, true);
+        playerAnimation.SetTrigger("Scanner");
+    }
+
+    public void OnMistake()
+    {
+        mistakeCount++;
+
+        if (mistakeCount >= maxMistakeCount)
+        {
+            GameManager.Instance.OnWarning();
+            mistakeCount = 0;
         }
     }
 
@@ -39,7 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerAnimation.SetTrigger("Scanner");
+            OnScanner();
 
             if (CustomerManager.Instance.currentCustomer.customerState == CustomerState.Calculate)
             {
@@ -54,7 +74,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            playerAnimation.SetTrigger("Scanner");
+            OnScanner();
 
             if (CustomerManager.Instance.currentCustomer.customerState == CustomerState.Calculate)
             {
@@ -76,7 +96,7 @@ public class PlayerController : MonoBehaviour
             ProductController _product = collision.gameObject.GetComponent<ProductController>();
             if (_product != null && !_product.isActive)
             {
-                GameManager.Instance.OnWarning();
+                OnMistake();
                 Destroy(collision.gameObject);
             }
         }

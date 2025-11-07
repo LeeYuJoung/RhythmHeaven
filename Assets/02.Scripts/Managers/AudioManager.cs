@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils.EnumTypes;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class AudioManager : MonoBehaviour
 
     public GameObject nextStageButton;
 
-    public AudioSource audioSource;
+    public AudioSource bgmAudioSource;
+    public AudioSource sfxAudioSource;
     public AudioClip[] bgms;
     public AudioClip[] sfxs;
 
@@ -32,12 +34,14 @@ public class AudioManager : MonoBehaviour
 
     private void Init()
     {
-        audioSource = GetComponent<AudioSource>();
+        bgmAudioSource = GetComponent<AudioSource>();
+        sfxAudioSource = GameObject.Find("SFXAudioPlayer").GetComponent<AudioSource>();
     }
 
+    // 오디오 재생 완료 확인
     public void OnHadEnded()
     {
-        if (!isEnded && audioSource.isPlaying == false && audioSource.time >= audioSource.clip.length - 0.05f)
+        if (!isEnded && bgmAudioSource.isPlaying == false && bgmAudioSource.time >= bgmAudioSource.clip.length - 0.05f)
         {
             isEnded = true;
             nextStageButton.SetActive(true);
@@ -45,9 +49,23 @@ public class AudioManager : MonoBehaviour
         }
 
         // 오디오를 다시 재생할 수도 있으므로, 리셋 조건 추가
-        if (isEnded && audioSource.isPlaying && audioSource.time < 0.1f)
+        if (isEnded && bgmAudioSource.isPlaying && bgmAudioSource.time < 0.1f)
         {
             isEnded = false;
         }
+    }
+
+    public void BGMPlay(BGMType _type)
+    {
+        bgmAudioSource.clip = null;
+        bgmAudioSource.clip = bgms[(int)_type];
+        bgmAudioSource.playOnAwake = true;
+    }
+
+    public void SFXPlay(SFXType _type)
+    {
+        sfxAudioSource.clip = null;
+        sfxAudioSource.clip = sfxs[(int)_type];
+        sfxAudioSource.playOnAwake = true;
     }
 }

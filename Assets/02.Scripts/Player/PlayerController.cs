@@ -4,6 +4,12 @@ using Utils.EnumTypes;
 public class PlayerController : MonoBehaviour
 {
     public PlayerState playerState = PlayerState.Idle;
+    public Animator playerAnimation;
+
+    private void Awake()
+    {
+        playerAnimation = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -14,9 +20,18 @@ public class PlayerController : MonoBehaviour
         {
             if(CustomerManager.Instance.currentCustomer.customerState == CustomerState.Greet)
             {
+                playerAnimation.SetTrigger("Greet");
                 CustomerManager.Instance.currentCustomer.currentTime = 0.0f;
                 CustomerManager.Instance.currentCustomer.customerState = CustomerState.Calculate;
             }
+            else
+            {
+                playerAnimation.SetTrigger("Scanner");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerAnimation.SetTrigger("Scanner");
         }
     }
 
@@ -24,6 +39,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            playerAnimation.SetTrigger("Scanner");
+
             if (CustomerManager.Instance.currentCustomer.customerState == CustomerState.Calculate)
             {
                 ProductController _product = collision.gameObject.GetComponent<ProductController>();
@@ -37,6 +54,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
+            playerAnimation.SetTrigger("Scanner");
+
             if (CustomerManager.Instance.currentCustomer.customerState == CustomerState.Calculate)
             {
                 ProductController _product = collision.gameObject.GetComponent<ProductController>();

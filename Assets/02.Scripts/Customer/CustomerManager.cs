@@ -15,6 +15,7 @@ public class CustomerManager : MonoBehaviour
 
     private float currentTime = 0.0f;
     private float customerSpawnTime = 2.0f;
+    public float greetWaitTime;
 
     private void Awake()
     {
@@ -55,14 +56,16 @@ public class CustomerManager : MonoBehaviour
 
         currentCustomer = Instantiate(customerPrefabs[_rdmIndex], customerSpawnPosition.position, Quaternion.identity)?.GetComponent<CustomerController>();
         currentCustomer.customerState = CustomerState.Greet;
+        currentCustomer.greetWaitTime = greetWaitTime;
 
         // 力前 积己
         for (int i = 0; i < RhythmManager.Instance.currentBeatInMeasure; i++)
         {
-            currentCustomer.products.Enqueue(productPrefabs[Random.Range(0, productPrefabs.Length)]);
+            int _poduct = Random.Range(0, (StageManager.Instance.currentStage == 1) ? 11 : productPrefabs.Length);
+            currentCustomer.products.Enqueue(productPrefabs[_poduct]);
         }
 
-        for(int i = 0; i < RhythmManager.Instance.currentBeatInMeasure + StageManager.Instance.currentStage; i++)
+        for(int i = 0; i < RhythmManager.Instance.currentBeatInMeasure + 1; i++)
         {
             currentCustomer.spawnTimes.Enqueue(RhythmManager.Instance.OnBeat(_rdmBeatIndex, i));
         }

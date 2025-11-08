@@ -66,8 +66,17 @@ public class CustomerController : MonoBehaviour
         }
         else
         {
-            isSuccess = false;
-            customerState = CustomerState.Leave;
+            if(StageManager.Instance.currentStage == 3)
+            {
+                CustomerManager.Instance.currentCustomer.currentTime = 0.0f;
+                CustomerManager.Instance.currentCustomer.customerState = CustomerState.Calculate;
+                CustomerManager.Instance.currentCustomer.productSpawnTime = CustomerManager.Instance.currentCustomer.spawnTimes.Dequeue();
+            }
+            else
+            {
+                isSuccess = false;
+                customerState = CustomerState.Leave;
+            }
         }
     }
 

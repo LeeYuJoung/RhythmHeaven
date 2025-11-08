@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
         {
             if(CustomerManager.Instance.currentCustomer.customerState == CustomerState.Greet)
             {
+                if (StageManager.Instance.currentStage == 3)
+                    OnMistake();
+
                 playerAnimation.SetTrigger("Greet");
                 CustomerManager.Instance.currentCustomer.currentTime = 0.0f;
                 CustomerManager.Instance.currentCustomer.customerState = CustomerState.Calculate;

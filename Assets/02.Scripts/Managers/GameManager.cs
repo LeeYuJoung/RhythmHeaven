@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private float currentWorkingDay = 0.0f;   // 현재 근무 일자
     private float totalWorkingDay = 30.0f;    // 총 근무 일자
 
+    public GameObject[] warningObject;
+
     private bool isWorking = false;    // 근무중인지 확인용
     private bool isGameOver = false;   // 게임 오버 확인용
 
@@ -55,6 +57,11 @@ public class GameManager : MonoBehaviour
             OnGameOver();
         else
             playerController.playerAnimation.runtimeAnimatorController = playerController.animatorControllers[GameManager.Instance.warningCount];
+
+        if (warningCount == 1)
+            warningObject[0].SetActive(true);
+        else
+            warningObject[1].SetActive(true);
     }
 
     public void OnGameOver()

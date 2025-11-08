@@ -50,8 +50,16 @@ public class StageManager : MonoBehaviour
 
         if(currentStageTime >= stageTime)
         {
+            // 스테이지 종료
             isStageOver = true;
             currentStageTime = 0.0f;
+
+            // 남아 있는 손님 및 제품 제거
+            CustomerManager.Instance.currentCustomer.OnLeave();
+
+            GameObject[] _products = GameObject.FindGameObjectsWithTag("Product");
+            for (int i = 0; i < _products.Length; i++)
+                Destroy(_products[i]);
 
             OnNextStage();
             UIManager.Instance.OnGuidBookActive();
@@ -91,14 +99,6 @@ public class StageManager : MonoBehaviour
     // 정전 이벤트
     private IEnumerator Blink()
     {
-        //// 1. 투명 → 밝게 (0→1)
-        //blinkObject.DOFade(1f, flashDuration * 0.5f)
-        //    .OnComplete(() =>
-        //    {
-        //        // 2. 다시 어둡게 (1→0)
-        //        blinkObject.DOFade(0f, flashDuration * 0.5f);
-        //    });
-
         blinkObject.color = new Color(255.0f, 255.0f, 255.0f, 255.0f);
         yield return new WaitForSeconds(0.5f);
         blinkObject.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
@@ -115,6 +115,7 @@ public class StageManager : MonoBehaviour
 
         currentStage++;
         RhythmManager.Instance.currentBeatInMeasure++;
-        productMoveSpeed += 2.0f;
+        CustomerManager.Instance.greetWaitTime = (currentStage == 1) ? 10.0f : 3.0f;
+        productMoveSpeed += 1.0f;
     }
 }

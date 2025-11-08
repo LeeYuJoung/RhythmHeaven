@@ -50,5 +50,7 @@ namespace Utils.EnumTypes
         Scanner,     // 계산 효과음
         Wrong,       // 틀렸을 때 효과음
         Siren,       // 경고 받았을 때 효과음
+        Paper,
+        Bell
     }
 }

@@ -1,12 +1,15 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
     public static StageManager Instance { get { return instance; } }
 
+    public Sprite[] bgs;
+    private SpriteRenderer bgRenderer;
     private SpriteRenderer blinkObject;
 
     public float flashDuration = 0.5f;    // 깜빡이는 속도
@@ -36,6 +39,7 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        bgRenderer = GameObject.Find("Background").GetComponent<SpriteRenderer>();
         blinkObject = GameObject.Find("Blink").GetComponent<SpriteRenderer>();
         // 초기 상태 투명
         blinkObject.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0f);
@@ -118,6 +122,7 @@ public class StageManager : MonoBehaviour
         }
 
         currentStage++;
+        bgRenderer.sprite = bgs[currentStage - 1];
         RhythmManager.Instance.currentBeatInMeasure++;
         CustomerManager.Instance.greetWaitTime = (currentStage == 1) ? 10.0f : 3.0f;
         productMoveSpeed += 1.0f;

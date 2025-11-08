@@ -54,6 +54,7 @@ public class CustomerManager : MonoBehaviour
         int _rdmIndex = Random.Range(0, customerPrefabs.Length);
         int _rdmBeatIndex = Random.Range(0, 6);
 
+        AudioManager.Instance.SFXPlay(SFXType.Bell, true);
         currentCustomer = Instantiate(customerPrefabs[_rdmIndex], customerSpawnPosition.position, Quaternion.identity)?.GetComponent<CustomerController>();
         currentCustomer.customerState = CustomerState.Greet;
         currentCustomer.greetWaitTime = greetWaitTime;

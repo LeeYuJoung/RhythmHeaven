@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isGameOver)
+        if (isGameOver && Input.GetKeyDown(KeyCode.Escape))
         {
-
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 
@@ -52,17 +52,29 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("::: °æ°í :::");
         warningCount++;
-        AudioManager.Instance.SirenSFXPlay(Utils.EnumTypes.SFXType.Siren);
 
         if (warningCount >= 3)
+        {
             OnBadGameOver();
+            return;
+        }
         else
-            playerController.playerAnimation.runtimeAnimatorController = playerController.animatorControllers[GameManager.Instance.warningCount];
+        {
+            playerController.playerAnimation.runtimeAnimatorController = playerController.animatorControllers[Instance.warningCount];
+        }
 
         if (warningCount == 1)
+        {
             warningObject[0].SetActive(true);
+            StartCoroutine(UIManager.Instance.WarningTextActive(0));
+        }
         else
+        {
             warningObject[1].SetActive(true);
+            StartCoroutine(UIManager.Instance.WarningTextActive(1));
+        }
+
+        AudioManager.Instance.SirenSFXPlay(Utils.EnumTypes.SFXType.Siren);
     }
 
     public void OnBadGameOver()

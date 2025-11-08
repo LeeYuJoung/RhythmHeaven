@@ -125,6 +125,7 @@ public class StageManager : MonoBehaviour
         bgRenderer.sprite = bgs[currentStage - 1];
         RhythmManager.Instance.currentBeatInMeasure++;
         CustomerManager.Instance.greetWaitTime = (currentStage == 1) ? 10.0f : 3.0f;
+        UIManager.Instance.MoveGuidBook();
         productMoveSpeed += 1.0f;
     }
 }

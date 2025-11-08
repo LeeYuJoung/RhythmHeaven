@@ -34,7 +34,12 @@ public class CustomerManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentCustomer == null && !GameManager.Instance.IsGameOver && !StageManager.Instance.isStageOver)
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+
+        if (currentCustomer == null && !GameManager.Instance.IsGameOver && !StageManager.Instance.isStageOver)
         {
             if(currentTime < customerSpawnTime)
             {

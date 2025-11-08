@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
     public void OnBadGameOver()
     {
         isGameOver = true;
+        EndingManager.Instance.StartBlink();
         AudioManager.Instance.BGMPlay(Utils.EnumTypes.BGMType.DieEnding);
-        UIManager.Instance.GameOver();
     }
 
     public void OnHappyGameOver()

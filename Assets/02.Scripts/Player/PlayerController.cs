@@ -1,4 +1,3 @@
-using UnityEditor.Animations;
 using UnityEngine;
 using Utils.EnumTypes;
 
@@ -7,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState playerState = PlayerState.Idle;
 
     public Animator playerAnimation;
-    public AnimatorController[] animatorControllers;
+    public RuntimeAnimatorController[] animatorControllers;
 
     private int mistakeCount = 0;
     private const int maxMistakeCount = 2;
@@ -63,6 +62,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void RemoveObject(GameObject _product)
+    {
+        // 즉시 눈에 안 보이게
+        _product.GetComponent<SpriteRenderer>().enabled = false;
+        _product.GetComponent<Collider2D>().enabled = false;
+
+        // 실제 파괴는 다음 프레임에
+        Destroy(_product);
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -75,7 +84,7 @@ public class PlayerController : MonoBehaviour
                 if (_product != null && _product.productType == ProductType.Basic)
                 {
                     _product.isActive = true;
-                    Destroy(collision.gameObject);
+                    RemoveObject(collision.gameObject);
                 }
             }
         }
@@ -89,7 +98,7 @@ public class PlayerController : MonoBehaviour
                 if (_product != null && _product.productType == ProductType.Strange)
                 {
                     _product.isActive = true;
-                    Destroy(collision.gameObject);
+                    RemoveObject(collision.gameObject);
                 }
             }
         }
@@ -103,7 +112,7 @@ public class PlayerController : MonoBehaviour
             if (_product != null && !_product.isActive)
             {
                 OnMistake();
-                Destroy(collision.gameObject);
+                RemoveObject(collision.gameObject);
             }
         }
     }

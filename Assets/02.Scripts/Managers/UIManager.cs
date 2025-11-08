@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance {  get { return instance; } }
 
     private Canvas canvas;
-    private GameObject gameOverPhanel;
+    public GameObject gameOverPhanel;
 
     public RectTransform guidRect;
     public GameObject guideBook;
@@ -34,16 +34,16 @@ public class UIManager : MonoBehaviour
     "4. 모든 품목은 Spacebar로 바코드를 찍을 것\n" +
     "5. 규칙을 절대 지킬 것\n" +
     "6. 계약직의 실수는 한 번 봐줄 것";
-    private string stage2Guid = "<color=red>1. 손님이 오면 3초 이내 인사할 것</color>/n" +
-        "2. 정해진 박자에 바코드를 찍을 것/n" +
-        "3. 갑자기 앞이 보이지 않아도 계산은 진행 할 것/n" +
-        "4. <color=red>일반 품목은 Spacebar로 바코드를 찍고, 이상현상 품목은 Enter로 바코드를 찍을 것</color>/n" +
-        "5. 규칙을 절대 지킬 것/n" +
+    private string stage2Guid = "<color=#A30606>1. 손님이 오면 3초 이내 인사할 것</color>\n" +
+        "2. 정해진 박자에 바코드를 찍을 것\n" +
+        "3. 갑자기 앞이 보이지 않아도 계산은 진행 할 것\n" +
+        "<color=#A30606>4. 일반 품목은 Spacebar로 바코드를 찍고, 이상현상 품목은 Enter로 바코드를 찍을 것</color>\n" +
+        "5. 규칙을 절대 지킬 것\n" +
         "6. 계약직의 실수는 한 번 봐줄 것";
-    private string stage3Guid = "<color=red>1. 손님에게 인사하지 말 것</color>\n" +
+    private string stage3Guid = "<color=#A30606>1. 손님에게 인사하지 말 것</color>\n" +
     "2. 정해진 박자에 바코드를 찍을 것\n" +
     "3. 갑자기 앞이 보이지 않아도 계산은 진행 할 것\n" +
-    "<color=red>4. 일반 품목은 Spacebar로 바코드를 찍고, 이상현상 품목은 Enter로 바코드를 찍을 것</color>\n" +
+    "<color=#A30606>4. 일반 품목은 Spacebar로 바코드를 찍고, 이상현상 품목은 Enter로 바코드를 찍을 것</color>\n" +
     "5. 규칙을 절대 지킬 것\n" +
     "6. 계약직의 실수는 한 번 봐줄 것";
 
@@ -61,28 +61,17 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(Input.GetKeyDown(KeyCode.Tab) && StageManager.Instance.isStageOver)
         {
             // 행동 지침서 활성화 및 비활성화
-            //if (!guideBook.activeSelf)
-            //{
-            //    guideBook.SetActive(true);
-            //}
-            //else
-            //{
-            //    if (StageManager.Instance.isStageOver)
-            //    {
-            //        AudioManager.Instance.BGMPlay(1 + StageManager.Instance.currentStage);
-            //    }
-
-            //    MoveGuidBook(false, moveDistance);
-            //    StageManager.Instance.isStageOver = false;
-            //}
-
             if (isDown)
+            {
                 MoveGuidBook();
+            }
             else
+            {
                 MoveGuidBook();
+            }
         }
 
         if (guideBook.activeSelf && isArrive)
@@ -115,7 +104,16 @@ public class UIManager : MonoBehaviour
         warningText = canvas.transform.GetChild(4).GetComponent<Text>();
 
         OnGuidBookActive();
-        MoveGuidBook();
+    }
+
+    public void OnStageStart()
+    {
+        if (StageManager.Instance.isStageOver)
+        {
+            AudioManager.Instance.BGMPlay(1 + StageManager.Instance.currentStage);
+        }
+
+        StageManager.Instance.isStageOver = false;
     }
 
     // 스테이지 넘어가는 연출
@@ -130,15 +128,15 @@ public class UIManager : MonoBehaviour
         if (!isDown)
         {
             isDown = true;
-            isArrive = false;
             guidRect.DOAnchorPosY(guidRect.anchoredPosition.y - moveDistance, moveDuration)
-                .SetEase(Ease.OutCubic);
+                .SetEase(Ease.OutCubic).OnComplete(() => isArrive = true);
         }
         else
         {
             isDown = false;
+            isArrive = false;
             guidRect.DOAnchorPosY(guidRect.anchoredPosition.y + moveDistance, moveDuration)
-                .SetEase(Ease.InCubic).OnComplete(() => isArrive = true);
+                .SetEase(Ease.InCubic).OnComplete(OnStageStart);
         }
     }
 
@@ -178,6 +176,6 @@ public class UIManager : MonoBehaviour
 
     public void GameOver()
     {
-        gameOverPhanel.SetActive(true);
+        //gameOverPhanel.SetActive(true);
     }
 }

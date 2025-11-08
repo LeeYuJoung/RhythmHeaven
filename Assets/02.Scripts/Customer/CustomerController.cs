@@ -9,7 +9,7 @@ public class CustomerController : MonoBehaviour
     public CustomerState customerState = CustomerState.Idle;
 
     public Queue<GameObject> products = new Queue<GameObject>();  // 계산할 제품 리스트
-    public int productCount = 4;   // 계산할 제품 갯수
+    //public int productCount = 4;   // 계산할 제품 갯수
 
     private Transform productSpawnPos;
 
@@ -28,7 +28,7 @@ public class CustomerController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (GameManager.Instance.IsGameOver || StageManager.Instance.isStageOver)
             return;
 
         OnProductStock();
@@ -84,8 +84,10 @@ public class CustomerController : MonoBehaviour
         else
         {
             currentTime = 0.0f;
+
             productSpawnTime = spawnTimes.Dequeue();
             ProductController _product = Instantiate(products.Dequeue(), productSpawnPos.position, Quaternion.identity).GetComponent<ProductController>();
+            _product.moveSpeed = StageManager.Instance.productMoveSpeed;
 
             if (_product.productType == ProductType.Basic)
                 AudioManager.Instance.SFXPlay(SFXType.Beat, false);

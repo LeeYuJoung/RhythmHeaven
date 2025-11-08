@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Utils.EnumTypes;
 
@@ -27,12 +28,12 @@ public class CustomerManager : MonoBehaviour
 
     private void Start()
     {
-        OnAppeared();
+
     }
 
     private void Update()
     {
-        if(currentCustomer == null && !GameManager.Instance.IsGameOver)
+        if(currentCustomer == null && !GameManager.Instance.IsGameOver && !StageManager.Instance.isStageOver)
         {
             if(currentTime < customerSpawnTime)
             {
@@ -50,7 +51,7 @@ public class CustomerManager : MonoBehaviour
     private void OnAppeared()
     {
         int _rdmIndex = Random.Range(0, customerPrefabs.Length);
-        int _rdmBeatIndex = Random.Range(0, 4);
+        int _rdmBeatIndex = Random.Range(0, 6);
 
         currentCustomer = Instantiate(customerPrefabs[_rdmIndex], customerSpawnPosition.position, Quaternion.identity)?.GetComponent<CustomerController>();
         currentCustomer.customerState = CustomerState.Greet;
@@ -61,7 +62,7 @@ public class CustomerManager : MonoBehaviour
             currentCustomer.products.Enqueue(productPrefabs[Random.Range(0, productPrefabs.Length)]);
         }
 
-        for(int i = 0; i < RhythmManager.Instance.currentBeatInMeasure + 1; i++)
+        for(int i = 0; i < RhythmManager.Instance.currentBeatInMeasure + StageManager.Instance.currentStage; i++)
         {
             currentCustomer.spawnTimes.Enqueue(RhythmManager.Instance.OnBeat(_rdmBeatIndex, i));
         }

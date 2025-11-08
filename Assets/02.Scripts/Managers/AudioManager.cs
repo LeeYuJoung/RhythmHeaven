@@ -41,27 +41,17 @@ public class AudioManager : MonoBehaviour
         beatAudioSource = GameObject.Find("BeatAudioPlayer").GetComponent<AudioSource>();
     }
 
-    // 오디오 재생 완료 확인
-    public void OnHadEnded()
-    {
-        if (!isEnded && bgmAudioSource.isPlaying == false && bgmAudioSource.time >= bgmAudioSource.clip.length - 0.05f)
-        {
-            isEnded = true;
-            nextStageButton.SetActive(true);
-            Debug.Log("오디오 재생이 완료되었습니다!");
-        }
-
-        // 오디오를 다시 재생할 수도 있으므로, 리셋 조건 추가
-        if (isEnded && bgmAudioSource.isPlaying && bgmAudioSource.time < 0.1f)
-        {
-            isEnded = false;
-        }
-    }
-
     public void BGMPlay(BGMType _type)
     {
         bgmAudioSource.clip = null;
         bgmAudioSource.clip = bgms[(int)_type];
+        bgmAudioSource.Play();
+    }
+
+    public void BGMPlay(int _type)
+    {
+        bgmAudioSource.clip = null;
+        bgmAudioSource.clip = bgms[_type];
         bgmAudioSource.Play();
     }
 

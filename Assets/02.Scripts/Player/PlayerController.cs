@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (GameManager.Instance.IsGameOver || StageManager.Instance.isStageOver)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && CustomerManager.Instance.currentCustomer != null)
         {
             if(CustomerManager.Instance.currentCustomer.customerState == CustomerState.Greet)
             {
@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     public void OnMistake()
     {
         mistakeCount++;
+        AudioManager.Instance.SFXPlay(SFXType.Wrong, false);
 
         if (mistakeCount >= maxMistakeCount)
         {

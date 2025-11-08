@@ -5,11 +5,14 @@ public class ProductController : MonoBehaviour
 {
     public ProductType productType;
 
-    private float moveSpeed = 4.0f;
+    public float moveSpeed = 4.0f;
     public bool isActive = false;
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver || StageManager.Instance.isStageOver)
+            return;
+
         Move();
     }
 

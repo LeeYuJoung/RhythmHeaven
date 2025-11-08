@@ -1,18 +1,27 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
     public static StageManager Instance { get { return instance; } }
 
-    public float flashDuration = 1.25f;     // 깜빡이는 속도
+    private SpriteRenderer blinkObject;
+
+    public float flashDuration = 0.5f;    // 깜빡이는 속도
     public Color flashColor = Color.black; // 깜빡이는 색상
 
     private float currentTime = 0.0f;
-    private float blinkTime = 10.0f;
+    private float blinkTime = 2.5f;
 
-    private int currentStage = 1;    // 현재 스테이지
+    private float currentStageTime = 0.0f;
+    private float stageTime = 60.0f;
+
+    public float productMoveSpeed = 2.0f;
+
+    public int currentStage = 0;    // 현재 스테이지
+    public bool isStageOver = false;    // 스테이지 종료 상태인가
 
     private void Awake()
     {
@@ -27,21 +36,37 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        blinkObject = GameObject.Find("Blink").GetComponent<SpriteRenderer>();
         // 초기 상태 투명
-        UIManager.Instance.blinkPhanel.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0f);
+        blinkObject.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0f);
+        OnNextStage();
+        UIManager.Instance.OnGuidBookActive();
     }
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (GameManager.Instance.IsGameOver || isStageOver)
             return;
 
-        AudioManager.Instance.OnHadEnded();
+        if(currentStageTime >= stageTime)
+        {
+            isStageOver = true;
+            currentStageTime = 0.0f;
 
-        if(currentTime >= blinkTime)
+            OnNextStage();
+            UIManager.Instance.OnGuidBookActive();
+            AudioManager.Instance.BGMPlay(Utils.EnumTypes.BGMType.Rule);
+        }
+        else
+        {
+            currentStageTime += Time.deltaTime;
+        }
+
+
+        if(currentTime >= blinkTime && currentStage == 3)
         {
             currentTime = 0.0f;
-            Blink();
+            StartCoroutine(Blink());
         }
         else
         {
@@ -64,15 +89,19 @@ public class StageManager : MonoBehaviour
     }
 
     // 정전 이벤트
-    public void Blink()
+    private IEnumerator Blink()
     {
-        // 1. 투명 → 밝게 (0→1)
-        UIManager.Instance.blinkPhanel.DOFade(1f, flashDuration * 0.5f)
-            .OnComplete(() =>
-            {
-                // 2. 다시 어둡게 (1→0)
-                UIManager.Instance.blinkPhanel.DOFade(0f, flashDuration * 0.5f);
-            });
+        //// 1. 투명 → 밝게 (0→1)
+        //blinkObject.DOFade(1f, flashDuration * 0.5f)
+        //    .OnComplete(() =>
+        //    {
+        //        // 2. 다시 어둡게 (1→0)
+        //        blinkObject.DOFade(0f, flashDuration * 0.5f);
+        //    });
+
+        blinkObject.color = new Color(255.0f, 255.0f, 255.0f, 255.0f);
+        yield return new WaitForSeconds(0.5f);
+        blinkObject.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
     }
 
     public void OnNextStage()
@@ -85,5 +114,7 @@ public class StageManager : MonoBehaviour
         }
 
         currentStage++;
+        RhythmManager.Instance.currentBeatInMeasure++;
+        productMoveSpeed += 2.0f;
     }
 }

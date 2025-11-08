@@ -55,8 +55,11 @@ public class StageManager : MonoBehaviour
             currentStageTime = 0.0f;
 
             // 남아 있는 손님 및 제품 제거
-            CustomerManager.Instance.currentCustomer.isSuccess = true;
-            CustomerManager.Instance.currentCustomer.OnLeave();
+            if(CustomerManager.Instance.currentCustomer != null)
+            {
+                CustomerManager.Instance.currentCustomer.isSuccess = true;
+                CustomerManager.Instance.currentCustomer.OnLeave();
+            }
 
             GameObject[] _products = GameObject.FindGameObjectsWithTag("Product");
             for (int i = 0; i < _products.Length; i++)

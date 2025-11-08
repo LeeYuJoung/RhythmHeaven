@@ -19,7 +19,7 @@ public class CustomerController : MonoBehaviour
     public Queue<float> spawnTimes = new Queue<float>();
     public float productSpawnTime;           // 力前 积己 矫埃
 
-    private bool isSuccess = false;
+    public bool isSuccess = false;
 
     private void Awake()
     {

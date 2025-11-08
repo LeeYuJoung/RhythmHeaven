@@ -38,7 +38,8 @@ namespace Utils.EnumTypes
         Stage_2,
         Stage_3,
         Rule,
-        Ending
+        DieEnding,
+        HappyEnding
     }
 
     // SFX е╦ют

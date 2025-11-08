@@ -52,9 +52,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("::: °æ°í :::");
         warningCount++;
+        AudioManager.Instance.SirenSFXPlay(Utils.EnumTypes.SFXType.Siren);
 
         if (warningCount >= 3)
-            OnGameOver();
+            OnBadGameOver();
         else
             playerController.playerAnimation.runtimeAnimatorController = playerController.animatorControllers[GameManager.Instance.warningCount];
 
@@ -64,14 +65,17 @@ public class GameManager : MonoBehaviour
             warningObject[1].SetActive(true);
     }
 
-    public void OnGameOver()
+    public void OnBadGameOver()
     {
         isGameOver = true;
+        AudioManager.Instance.BGMPlay(Utils.EnumTypes.BGMType.DieEnding);
         UIManager.Instance.GameOver();
     }
 
-    public void OnExit()
+    public void OnHappyGameOver()
     {
-        
+        isGameOver = true;
+        AudioManager.Instance.BGMPlay(Utils.EnumTypes.BGMType.HappyEnding);
+        UIManager.Instance.GameOver();
     }
 }

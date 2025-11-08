@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource bgmAudioSource;
     public AudioSource sfxAudioSource;
     public AudioSource beatAudioSource;
+    public AudioSource sirenAudioSource;
 
     public AudioClip[] bgms;
     public AudioClip[] sfxs;
@@ -39,6 +40,7 @@ public class AudioManager : MonoBehaviour
         bgmAudioSource = GetComponent<AudioSource>();
         sfxAudioSource = GameObject.Find("SFXAudioPlayer").GetComponent<AudioSource>();
         beatAudioSource = GameObject.Find("BeatAudioPlayer").GetComponent<AudioSource>();
+        sirenAudioSource = GameObject.Find("SirenAudioPlayer").GetComponent<AudioSource>();
     }
 
     public void BGMPlay(BGMType _type)
@@ -69,5 +71,11 @@ public class AudioManager : MonoBehaviour
             beatAudioSource.clip = sfxs[(int)_type];
             beatAudioSource.Play();
         }
+    }
+    public void SirenSFXPlay(SFXType _type)
+    {
+        sirenAudioSource.clip = null;
+        sirenAudioSource.clip = sfxs[(int)_type];
+        sirenAudioSource.Play();
     }
 }

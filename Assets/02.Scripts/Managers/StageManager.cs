@@ -55,6 +55,7 @@ public class StageManager : MonoBehaviour
             currentStageTime = 0.0f;
 
             // 남아 있는 손님 및 제품 제거
+            CustomerManager.Instance.currentCustomer.isSuccess = true;
             CustomerManager.Instance.currentCustomer.OnLeave();
 
             GameObject[] _products = GameObject.FindGameObjectsWithTag("Product");
@@ -109,7 +110,7 @@ public class StageManager : MonoBehaviour
         // 다음 스테이지로 이동
         if (currentStage >= 3)
         {
-            GameManager.Instance.OnGameOver();
+            GameManager.Instance.OnHappyGameOver();
             return;
         }
 

@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public float moveDuration = 2.0f;
     public bool isDown = false;
     public bool isArrive = false;
+    public bool isDone = false;
 
     public Text warningText;
 
@@ -61,22 +62,24 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab) && StageManager.Instance.isStageOver)
+        if(Input.GetKeyDown(KeyCode.Tab) && StageManager.Instance.isStageOver && isDone)
         {
             // 행동 지침서 활성화 및 비활성화
             if (isDown)
             {
+                isDone = false;
                 MoveGuidBook();
             }
             else
             {
+                isDone = false;
                 MoveGuidBook();
             }
         }
 
         if (guideBook.activeSelf && isArrive)
         {
-            if(currentTime >= tabTime)
+            if (currentTime >= tabTime)
             {
                 currentTime = 0.0f;
                 StartCoroutine(OnBlinkTab());
@@ -129,14 +132,14 @@ public class UIManager : MonoBehaviour
         {
             isDown = true;
             guidRect.DOAnchorPosY(guidRect.anchoredPosition.y - moveDistance, moveDuration)
-                .SetEase(Ease.OutCubic).OnComplete(() => isArrive = true);
+                .SetEase(Ease.OutCubic).OnComplete(() => { isArrive = true; isDone = true; });
         }
         else
         {
             isDown = false;
             isArrive = false;
             guidRect.DOAnchorPosY(guidRect.anchoredPosition.y + moveDistance, moveDuration)
-                .SetEase(Ease.InCubic).OnComplete(OnStageStart);
+                .SetEase(Ease.InCubic).OnComplete(() => { OnStageStart(); isDone = true; });
         }
     }
 

@@ -88,6 +88,6 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         AudioManager.Instance.BGMPlay(Utils.EnumTypes.BGMType.HappyEnding);
-        UIManager.Instance.GameOver();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
     }
 }

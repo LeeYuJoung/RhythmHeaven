@@ -1,6 +1,6 @@
-# 💀 리듬캐셔
+# 🏪 리듬캐셔
 <div>
- <img width="49%" src="https://github.com/Team-murmuro/BubbleBubbleLaundry/blob/main/Intro.png">
+ <img width="49%" src="https://github.com/Team-GrandPrize/RhythmCashier/blob/main/Intro.png">
  <img width="49%" src="https://github.com/Team-GrandPrize/RhythmCashier/blob/main/Main.png">
 </div>
 
@@ -17,7 +17,7 @@
 
 ## 💡 Points
 + **리듬게임 시스템** 구현
-  - 손님의 자연스러운 AI 이동 구현을 위해 외부 Package **NavMesh Plus** 가져와 사용
+  - 랜덤으로 나오는 비트에 맞춰 노드를 생성하고 판정 위치에서 정확히 스페이스를 눌러야 점수 획득할 수 있는 구조 설계
 
 ## 🔗 Links
  📺 [youtube : 리듬캐셔 플레이 영상](https://www.youtube.com/watch?v=j6SiBoSuhak)

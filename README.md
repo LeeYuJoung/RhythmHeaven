@@ -1,7 +1,7 @@
 # 💀 리듬캐셔
 <div>
  <img width="49%" src="https://github.com/Team-murmuro/BubbleBubbleLaundry/blob/main/Intro.png">
- <img width="49%" src="https://github.com/Team-murmuro/BubbleBubbleLaundry/blob/main/Main.png">
+ <img width="49%" src="https://github.com/Team-GrandPrize/RhythmCashier/blob/main/Main.png">
 </div>
 
 *** 
